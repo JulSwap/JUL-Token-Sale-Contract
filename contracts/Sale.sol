@@ -1,5 +1,7 @@
 pragma solidity ^0.6.0;
 
+
+
 library SafeMath {
     
     function add(uint256 a, uint256 b) internal pure returns (uint256) {
@@ -91,7 +93,7 @@ contract Sale {
     // receive FUNCTION
     // converts ETH to TOKEN and sends new TOKEN to the sender
     receive () payable external {
-        require(startDate>0);
+        require(startDate>0 && now.sub(startDate) <= 7 days);
         require(Token.balanceOf(address(this))>0);
         require(msg.value>= 1 ether && msg.value <= 50 ether);
          
@@ -127,7 +129,7 @@ contract Sale {
     // converts ETH to TOKEN and sends new TOKEN to the 
     
     function contribute() external payable {
-        require(startDate>0);
+       require(startDate>0 && now.sub(startDate) <= 7 days);
         require(Token.balanceOf(address(this))>0);
         require(msg.value>= 1 ether && msg.value <= 50 ether);
         
@@ -149,7 +151,7 @@ contract Sale {
         {
            amount = msg.value.mul(32);
         }
-        else if(now.sub(startDate) > 3 days)
+        else if(now.sub(startDate) > 4 days)
         {
            amount = msg.value.mul(31);
         }
